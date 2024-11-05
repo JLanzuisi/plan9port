@@ -72,6 +72,9 @@ main(int _argc, char **_argv)
 	case 'a':
 		*ap++ = "-a";
 		break;
+	case 'i':
+		*ap++ = "-i";
+		break;
 	case 'W':
 		*ap++ = "-W";
 		*ap++ = EARGF(usage());
@@ -119,7 +122,7 @@ main(int _argc, char **_argv)
 void
 usage(void)
 {
-	dprint("usage: sam [-d] [-t samterm] [-s sam name] [-r machine] [file ...]\n");
+	dprint("usage: sam [-d] [-i] [-t samterm] [-s sam name] [-r machine] [file ...]\n");
 	exits("usage");
 }
 

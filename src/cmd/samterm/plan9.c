@@ -28,7 +28,7 @@ static char *exname;
 void
 usage(void)
 {
-	fprint(2, "usage: samterm -a -W winsize\n");
+	fprint(2, "usage: samterm -a -i -W winsize\n");
 	threadexitsall("usage");
 }
 
@@ -43,6 +43,9 @@ getscreen(int argc, char **argv)
 		break;
 	case 'W':
 		winsize = EARGF(usage());
+		break;
+	case 'i':
+		spacesindent = 1;
 		break;
 	default:
 		usage();

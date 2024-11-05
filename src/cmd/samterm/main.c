@@ -25,6 +25,7 @@ char	hasunlocked = 0;
 int	maxtab = 8;
 int	chord;
 int	autoindent;
+int	spacesindent;
 
 #define chording 0	/* code here for reference but it causes deadlocks */
 
@@ -397,6 +398,17 @@ ctlw(Rasp *r, long o, long p)
 	return p>=o? p : o;
 }
 
+int
+getcol(Rasp *r, long p)
+{
+	int col;
+
+	for(col = 0; p > 0 && raspc(r, p-1)!='\n'; p--, col++)
+		;
+	return col;
+}
+
+
 long
 ctlu(Rasp *r, long o, long p)
 {
@@ -555,9 +567,15 @@ type(Flayer *l, int res)	/* what a bloody mess this is */
 				break;
 			}
 		}
-		*p++ = c;
-		if(autoindent)
-		if(c == '\n'){
+		if(spacesindent && c == '\t'){
+			int i, col, n;
+			col = getcol(&t->rasp, a);
+			n = maxtab - col % maxtab;
+			for(i = 0; i < n && p < buf+nelem(buf); i++)
+				*p++ = ' ';
+		} else
+			*p++ = c;
+		if(c == '\n' && autoindent && t != &cmd){
 			/* autoindent */
 			int cursor, ch;
 			cursor = ctlu(&t->rasp, 0, a+(p-buf)-1);
@@ -569,7 +587,7 @@ type(Flayer *l, int res)	/* what a bloody mess this is */
 					break;
 			}
 		}
-		if(c == '\n' || p >= buf+nelem(buf))
+		if(c == '\n' || p >= buf+sizeof(buf)/sizeof(buf[0]))
 			break;
 	}
 	if(p > buf){
