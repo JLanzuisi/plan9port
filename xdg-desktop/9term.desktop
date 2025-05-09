@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=9term
+Type=Application
+Comment=Plan 9 terminal
+Exec=/home/j/clones/plan9port/bin/9term
+Icon=/home/j/clones/plan9port/spaceglenda.png
+Terminal=false
