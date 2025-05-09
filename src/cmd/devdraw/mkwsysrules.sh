@@ -2,7 +2,7 @@
 
 [ -f $PLAN9/config ] && . $PLAN9/config
 
-if [ "x$X11" = "x" ]; then 
+if [ "x$X11" = "x" ]; then
 	if [ -d /usr/X11R6 ]; then
 		X11=/usr/X11R6
 	elif [ -d /usr/local/X11R6 ]; then
@@ -43,13 +43,14 @@ if [ "x$WSYSTYPE" = "xx11" -a "x$X11H" = "x" ]; then
 		X11H=""
 	fi
 fi
-	
+
 echo 'WSYSTYPE='$WSYSTYPE
 echo 'X11='$X11
 echo 'X11H='$X11H
 
 if [ $WSYSTYPE = x11 ]; then
-	echo 'CFLAGS=$CFLAGS '$X11H -lXfixes
+	echo 'CFLAGS=$CFLAGS '$X11H
+    echo 'LDFLAGS=$LDFLAGS  -lXfixes'
 	echo 'HFILES=$HFILES $XHFILES'
 	XO=`ls x11-*.c 2>/dev/null | sed 's/\.c$/.o/'`
 	echo 'WSYSOFILES=$WSYSOFILES '$XO
